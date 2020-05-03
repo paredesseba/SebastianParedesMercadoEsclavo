@@ -3,4 +3,7 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+    <color name="CyanMaterialPrimario">#00b8d4</color>
+    <color name="CyanMaterialLight">#62ebff</color>
+    <color name="CyanMaterialDark">#0088a3</color>
 </resources>
