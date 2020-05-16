@@ -14,9 +14,11 @@ import java.util.List;
 public class AdapterProducto extends RecyclerView.Adapter<AdapterProducto.ViewHolderProducto> {
 
     List<Producto> productoList;
+    AdapterProductoListener adapterProductoListener;
 
-    public AdapterProducto(List<Producto> productoList) {
+    public AdapterProducto(List<Producto> productoList, AdapterProductoListener listener) {
         this.productoList = productoList;
+        this.adapterProductoListener = listener;
     }
 
     @NonNull
@@ -49,6 +51,14 @@ public class AdapterProducto extends RecyclerView.Adapter<AdapterProducto.ViewHo
             ivproducto = itemView.findViewById(R.id.celdaivproducto);
             tvprecioproducto = itemView.findViewById(R.id.celdatvprecio);
             tvnombreproducto = itemView.findViewById(R.id.celdatvnombre);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Producto producto = productoList.get(getAdapterPosition());
+                    adapterProductoListener.onClickProducto(producto);
+                }
+            });
         }
 
         public void onBind(Producto producto) {
@@ -56,5 +66,9 @@ public class AdapterProducto extends RecyclerView.Adapter<AdapterProducto.ViewHo
             tvprecioproducto.setText("$" + producto.getPrecio());
             tvnombreproducto.setText(producto.getNombre());
         }
+    }
+
+    public interface AdapterProductoListener {
+        void onClickProducto(Producto producto);
     }
 }

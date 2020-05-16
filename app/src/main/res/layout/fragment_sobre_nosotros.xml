@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/CyanMaterialDark"
+    tools:context=".SobreNosotrosFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Historia"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="20dp"
+        android:textColor="#DE000000"
+        android:textSize="35sp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="#99000000"
+        android:layout_marginHorizontal="10dp"
+        android:text="Desde Abril de 2020 la empresa inicia sus actividades en el rubro de compra y venta de articulos online."
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:visibility="visible"
+        android:background="@color/CyanMaterialLight">
+
+    </View>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mision"
+        android:textColor="#DE000000"
+        android:textSize="35sp"
+        android:layout_marginHorizontal="10dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="#99000000"
+        android:layout_marginHorizontal="10dp"
+        android:text="Brindar la mejor experiencia del mercado en la busqueda de articulos por medio de nuestra plataforma."
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:visibility="visible"
+        android:background="@color/CyanMaterialLight">
+
+    </View>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Vision"
+        android:textColor="#DE000000"
+        android:layout_marginHorizontal="10dp"
+        android:textSize="35sp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginHorizontal="10dp"
+        android:textColor="#99000000"
+        android:text="Liderar el segmento, siendo la opcion mas atractiva a la hora de buscar un producto en internet."
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:visibility="visible"
+        android:background="@color/CyanMaterialLight">
+
+    </View>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#DE000000"
+        android:text="Valores"
+        android:layout_marginHorizontal="10dp"
+        android:textSize="35sp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginHorizontal="10dp"
+        android:textColor="#99000000"
+        android:text="Compromiso, puntualidad en las entregas, adaptabilidad, constancia."
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:visibility="visible"
+        android:background="@color/CyanMaterialLight">
+
+    </View>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Acerca del desarrollador"
+        android:textColor="#DE000000"
+        android:layout_marginHorizontal="10dp"
+        android:textSize="35sp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="#99000000"
+        android:layout_marginHorizontal="10dp"
+        android:text="Sebastian Paredes.\n\www.github.com/paredesseba\n\www.instagram.com/pseba13"
+        />
+
+</LinearLayout>

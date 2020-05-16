@@ -1,15 +1,19 @@
 package com.example.sebastianparedesmercadoesclavo;
 
-public class Producto {
+import java.io.Serializable;
+
+public class Producto implements Serializable {
 
     private Integer imagen;
     private String nombre;
     private String precio;
+    private String descripcion;
 
-    public Producto(Integer imagen, String nombre, String precio) {
+    public Producto(Integer imagen, String nombre, String precio, String descripcion) {
         this.imagen = imagen;
         this.nombre = nombre;
         this.precio = precio;
+        this.descripcion = descripcion;
     }
 
     public Integer getImagen() {
@@ -34,5 +38,13 @@ public class Producto {
 
     public void setPrecio(String precio) {
         this.precio = precio;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 }
