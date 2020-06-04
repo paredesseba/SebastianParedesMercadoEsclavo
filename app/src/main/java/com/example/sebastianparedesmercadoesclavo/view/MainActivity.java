@@ -1,24 +1,24 @@
-package com.example.sebastianparedesmercadoesclavo;
+package com.example.sebastianparedesmercadoesclavo.view;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toolbar;
 
+import com.example.sebastianparedesmercadoesclavo.R;
+import com.example.sebastianparedesmercadoesclavo.model.Result;
 import com.google.android.material.navigation.NavigationView;
 
-import static com.example.sebastianparedesmercadoesclavo.DetalleProductoFragment.CLAVE_PRODUCTO;
+import static com.example.sebastianparedesmercadoesclavo.view.ResultDetailFragment.KEY_RESULT;
 
 
-public class MainActivity extends AppCompatActivity implements ListaProductosFragment.ListaProductosFragmentListener {
+public class MainActivity extends AppCompatActivity implements ResultListFragment.ResultListFragmentListener {
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -28,9 +28,11 @@ public class MainActivity extends AppCompatActivity implements ListaProductosFra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //inicializo la UI
         navigationView = findViewById(R.id.mainNavView);
         drawerLayout = findViewById(R.id.mainDrawerL);
 
+        //listener de menu lateral
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -45,13 +47,10 @@ public class MainActivity extends AppCompatActivity implements ListaProductosFra
             }
         });
 
-        ListaProductosFragment listaProductosFragment = new ListaProductosFragment();
-
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.mainlayoutcontenedor,listaProductosFragment)
-                .commit();
+        //fragment con todos los recyclers del home
+        ResultListFragment resultListFragment = new ResultListFragment();
+        //lo pego sin metodo (sin addtobackstack)
+        pegarFragment(resultListFragment);
     }
 
     private void pegarFragment(Fragment fragment) {
@@ -64,11 +63,12 @@ public class MainActivity extends AppCompatActivity implements ListaProductosFra
     }
 
     @Override
-    public void onClickProductoFragment(Producto producto) {
+    public void onClickResult(Result result) {
+        ResultDetailFragment resultDetailFragment = new ResultDetailFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(CLAVE_PRODUCTO,producto);
-        DetalleProductoFragment detalleProductoFragment = new DetalleProductoFragment();
-        detalleProductoFragment.setArguments(bundle);
-        pegarFragment(detalleProductoFragment);
+        bundle.putSerializable(KEY_RESULT,result);
+        resultDetailFragment.setArguments(bundle);
+        pegarFragment(resultDetailFragment);
+
     }
 }

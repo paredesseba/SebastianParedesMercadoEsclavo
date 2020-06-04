@@ -4,57 +4,80 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardElevation="15dp"
-    android:layout_margin="10dp"
-    app:cardCornerRadius="15dp">
+    android:layout_margin="8dp"
+    app:cardCornerRadius="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#DE62EBFF"
+        android:id="@+id/celdaconstraint"
         >
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
             android:id="@+id/celdaivproducto"
-            android:src="@drawable/huaweipcuarenta"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:scaleType="centerCrop"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/celdatvprecio"
-            >
-        </ImageView>
+            android:src="@drawable/huaweipcuarenta"
+            app:layout_constraintBottom_toBottomOf="@id/celdaconstraint"
+            app:layout_constraintStart_toStartOf="@id/celdaconstraint"
+            app:layout_constraintEnd_toStartOf="@+id/guia44"
+            app:layout_constraintTop_toTopOf="@id/celdaconstraint"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guia44"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.44"/>
 
         <TextView
-            android:id="@+id/celdatvprecio"
+            android:id="@+id/celdatvprice"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="35sp"
+            android:textSize="30sp"
             android:textColor="#DE000000"
-            android:layout_marginHorizontal="10dp"
             android:text="$40000"
-            app:layout_constraintTop_toBottomOf="@+id/celdaivproducto"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginHorizontal="5dp"
+            app:layout_constraintTop_toTopOf="@+id/celdaconstraint"
+            app:layout_constraintEnd_toEndOf="@id/celdaconstraint"
+            app:layout_constraintStart_toEndOf="@+id/guia44"
             app:layout_constraintBottom_toTopOf="@+id/celdatvnombre"
             >
         </TextView>
 
         <TextView
             android:id="@+id/celdatvnombre"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             android:textColor="#99000000"
-            android:textSize="25dp"
+            android:textSize="20sp"
             android:text="Huawei P40"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/celdatvprecio">
+            android:maxLines="2"
+            android:ellipsize="end"
+            app:layout_constraintStart_toEndOf="@+id/guia44"
+            app:layout_constraintEnd_toEndOf="@id/celdaconstraint"
+            app:layout_constraintBottom_toTopOf="@id/celdatvciudad"
+            app:layout_constraintTop_toBottomOf="@+id/celdatvprice">
         </TextView>
+
+        <TextView
+            android:id="@+id/celdatvciudad"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="#99000000"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="5dp"
+            android:text="Ciudad"
+            app:layout_constraintStart_toEndOf="@id/guia44"
+            app:layout_constraintEnd_toEndOf="@id/celdaconstraint"
+            app:layout_constraintBottom_toBottomOf="@id/celdaconstraint"
+            app:layout_constraintTop_toBottomOf="@id/celdatvnombre"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
