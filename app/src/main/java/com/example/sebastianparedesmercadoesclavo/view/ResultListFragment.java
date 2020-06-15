@@ -81,11 +81,11 @@ public class ResultListFragment extends Fragment implements ResultListAdapter.Re
     }
 
     @Override
-    public void onClickResult(Result result) {
-        resultListFragmentListener.onClickResult(result);
+    public void onClickResult(String id) {
+        resultListFragmentListener.onClickResult(id);
     }
 
     public interface ResultListFragmentListener{
-        void onClickResult(Result result);
+        void onClickResult(String id);
     }
 }

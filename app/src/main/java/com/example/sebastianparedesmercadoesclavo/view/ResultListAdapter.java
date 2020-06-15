@@ -63,7 +63,7 @@ public class ResultListAdapter extends RecyclerView.Adapter<ResultListAdapter.Vi
                 @Override
                 public void onClick(View v) {
                     Result result = resultList.get(getAdapterPosition());
-                    resultListAdapterListener.onClickResult(result);
+                    resultListAdapterListener.onClickResult(result.getId());
                 }
             });
         }
@@ -77,6 +77,6 @@ public class ResultListAdapter extends RecyclerView.Adapter<ResultListAdapter.Vi
     }
 
     public interface ResultListAdapterListener{
-        void onClickResult(Result result);
+        void onClickResult(String id);
     }
 }

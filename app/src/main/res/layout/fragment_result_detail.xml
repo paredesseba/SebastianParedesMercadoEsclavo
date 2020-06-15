@@ -71,35 +71,24 @@
             android:layout_margin="8dp"
             android:textColor="@color/colorAccent"
             android:textSize="23sp"
-            app:layout_constraintBottom_toTopOf="@+id/fresultdetailtvattributeone"
+            app:layout_constraintBottom_toTopOf="@+id/fresultdetailtvcondition"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fresultdetailtvubicacion" />
 
         <TextView
-            android:id="@+id/fresultdetailtvattributeone"
+            android:id="@+id/fresultdetailtvcondition"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:textSize="23sp"
-            app:layout_constraintBottom_toTopOf="@+id/fresultdetailtvattributetwo"
+            app:layout_constraintBottom_toTopOf="@+id/fresultdetailtvneighborhood"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fresultdetailtvaddress" />
 
         <TextView
-            android:id="@+id/fresultdetailtvattributetwo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:textSize="23sp"
-            app:layout_constraintBottom_toTopOf="@+id/fresultdetailtvattributethree"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fresultdetailtvattributeone" />
-
-        <TextView
-            android:id="@+id/fresultdetailtvattributethree"
+            android:id="@+id/fresultdetailtvneighborhood"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
@@ -107,7 +96,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fresultdetailtvattributetwo" />
+            app:layout_constraintTop_toBottomOf="@+id/fresultdetailtvcondition" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

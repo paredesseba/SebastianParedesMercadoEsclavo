@@ -3,46 +3,49 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:background="@color/CyanMaterialDark"
+    android:background="#9fff"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.Toolbar
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/maintoolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:title="Todos los productos!"
-        app:titleTextColor="#DE000000">
-
-
-    </androidx.appcompat.widget.Toolbar>
+    <include layout="@layout/toolbar"/>
 
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/mainDrawerL"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/CyanMaterialDark"
+        android:background="#fff"
         tools:context=".view.MainActivity">
 
-        <LinearLayout
+
+        <FrameLayout
             android:id="@+id/mainlayoutcontenedor"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/maintoolbar">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        </LinearLayout>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/FABsearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:layout_margin="16dp"
+                android:tint="#000"
+                android:backgroundTint="#f2d600"
+                android:src="@drawable/ic_baseline_search_24"
+                />
+
+        </FrameLayout>
+
 
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/mainNavView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:background="@color/CyanMaterialDark"
-            app:menu="@menu/menu_lateral_nav">
+            android:background="#FFF"
+            app:menu="@menu/menu_lateral_nav"
+            app:headerLayout="@layout/nav_header"
+            >
 
         </com.google.android.material.navigation.NavigationView>
 

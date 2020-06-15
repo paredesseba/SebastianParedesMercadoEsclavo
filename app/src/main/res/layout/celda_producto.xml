@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#DE62EBFF"
+        android:background="#9FFF"
         android:id="@+id/celdaconstraint"
         >
 
