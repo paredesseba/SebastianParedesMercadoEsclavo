@@ -11,22 +11,15 @@
         android:layout_height="match_parent">
 
 
-        <ImageView
-            android:id="@+id/fresultdetailiv"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_margin="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/gl30h"
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="330dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/fresultdetailtvtitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/gl30h"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.30" />
 
 
         <TextView
@@ -38,7 +31,7 @@
             app:layout_constraintBottom_toTopOf="@+id/fresultdetailtvprice"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/gl30h" />
+            app:layout_constraintTop_toBottomOf="@+id/viewpager" />
 
         <TextView
             android:id="@+id/fresultdetailtvprice"

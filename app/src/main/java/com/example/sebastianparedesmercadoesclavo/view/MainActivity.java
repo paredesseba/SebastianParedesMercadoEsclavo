@@ -10,10 +10,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.sebastianparedesmercadoesclavo.R;
+import com.example.sebastianparedesmercadoesclavo.databinding.ActivityMainBinding;
 import com.example.sebastianparedesmercadoesclavo.model.Result;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -26,13 +29,16 @@ public class MainActivity extends AppCompatActivity implements ResultListFragmen
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+    private ActivityMainBinding binding;
     // Access a Cloud Firestore instance from your Activity
     private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
         //inicializo la UI
         toolbar = findViewById(R.id.toolbar);
@@ -57,37 +63,54 @@ public class MainActivity extends AppCompatActivity implements ResultListFragmen
         });
 
         //toolbar + burger king
+        configureToolbar();
+
+        //fragment con todos los recyclers del home
+        ResultListFragment resultListFragment = new ResultListFragment();
+        //lo pego sin metodo (sin addtobackstack)
+        pegarFragment(resultListFragment);
+
+        //FAB
+        binding.FABsearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickFAB();
+            }
+        });
+
+    }
+
+    private void configureToolbar() {
         setSupportActionBar(toolbar);
         ActionBar supportActionBar = getSupportActionBar();
         supportActionBar.setDisplayHomeAsUpEnabled(true);
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_drawers, R.string.close_drawers);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
-
-
-
-        //fragment con todos los recyclers del home
-        ResultListFragment resultListFragment = new ResultListFragment();
-        //lo pego sin metodo (sin addtobackstack)
-        pegarFragment(resultListFragment);
     }
 
     private void pegarFragment(Fragment fragment) {
 
         FragmentManager supportFragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.mainlayoutcontenedor,fragment);
+        fragmentTransaction.replace(R.id.mainlayoutcontenedor, fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 
+    //ResultListFragment. Intent a ItemActivity
     @Override
     public void onClickResult(String id) {
-        ResultDetailFragment resultDetailFragment = new ResultDetailFragment();
+        Intent intent = new Intent(MainActivity.this, ItemActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString(KEY_ID,id);
-        resultDetailFragment.setArguments(bundle);
-        pegarFragment(resultDetailFragment);
+        bundle.putString(KEY_ID, id);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
 
+    //Listener FAB. Intent a SearchActivity
+    public void onClickFAB(){
+        Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+        startActivity(intent);
     }
 }

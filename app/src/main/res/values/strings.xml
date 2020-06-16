@@ -7,4 +7,5 @@
     <string name="close_drawers">Close drawers</string>
     <string name="facebook_app_id">259053415300791</string>
     <string name="fb_login_protocol_scheme">fb259053415300791</string>
+    <string name="buscando">Buscaste %s</string>
 </resources>

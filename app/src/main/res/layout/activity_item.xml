@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="#9fff"
+    android:layout_height="match_parent"
+    tools:context=".view.ItemActivity">
+
+    <include layout="@layout/toolbar"/>
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/itemDrawerL"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff"
+        tools:context=".view.MainActivity">
+
+
+        <LinearLayout
+            android:id="@+id/containeritem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"/>
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/itemNavView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="#FFF"
+            app:menu="@menu/menu_lateral_nav"
+            app:headerLayout="@layout/nav_header"
+            />
+
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+</LinearLayout>

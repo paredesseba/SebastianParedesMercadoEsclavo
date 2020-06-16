@@ -7,10 +7,13 @@ import com.example.sebastianparedesmercadoesclavo.util.ResultListener;
 public class QueryResponseController {
 
     private QueryResponseDao queryResponseDao;
+    private static final Integer PAGE_SIZE_LIMIT = 50;
+    private Integer offset = 0;
 
 
     public QueryResponseController() {
         this.queryResponseDao = new QueryResponseDao();
+        this.offset = 0;
     }
 
     public void getQueryResponse(final ResultListener<QueryResponse> queryResponseResultListener){
@@ -29,5 +32,14 @@ public class QueryResponseController {
                 queryResponseResultListener.onFinish(result);
             }
         });
+    }
+
+    public void getQueryRSearch(final ResultListener<QueryResponse> queryResponseResultListener, String query, Integer offset, Integer limit){
+        this.queryResponseDao.getQueryRSearch(new ResultListener<QueryResponse>() {
+            @Override
+            public void onFinish(QueryResponse result) {
+                queryResponseResultListener.onFinish(result);
+            }
+        }, query, offset, limit);
     }
 }

@@ -26,6 +26,14 @@ public class ResultListAdapter extends RecyclerView.Adapter<ResultListAdapter.Vi
         this.resultListAdapterListener = listener;
     }
 
+    public List<Result> getResultList() {
+        return resultList;
+    }
+
+    public void setResultList(List<Result> resultList) {
+        this.resultList = resultList;
+    }
+
     @NonNull
     @Override
     public ViewHolderResult onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
