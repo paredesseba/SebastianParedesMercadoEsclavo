@@ -1,5 +1,6 @@
 package com.example.sebastianparedesmercadoesclavo.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -33,17 +34,18 @@ public class ResultDetailFragment extends Fragment {
 
     public static final String KEY_ID = "id";
 
-    private ImageView ivresult;
-    private TextView tvtitle;
-    private TextView tvprice;
-    private TextView tvaddress;
-    private TextView tvcondition;
-    private TextView tvneighborhood;
     private FragmentResultDetailBinding binding;
+    private Double lat;
+    private Double lng;
+    private ItemFragmentListener itemFragmentListener;
 
 
     public ResultDetailFragment() {
         // Required empty public constructor
+    }
+
+    public ResultDetailFragment(ItemFragmentListener itemFragmentListener) {
+        this.itemFragmentListener = itemFragmentListener;
     }
 
     @Override
@@ -53,34 +55,29 @@ public class ResultDetailFragment extends Fragment {
         binding = FragmentResultDetailBinding.inflate(inflater,container, false);
         View view = binding.getRoot();
 
-
-
         Bundle bundle = getArguments();
         String id = bundle.getString(KEY_ID);
-
-        tvtitle = view.findViewById(R.id.fresultdetailtvtitle);
-        tvprice = view.findViewById(R.id.fresultdetailtvprice);
-        tvaddress = view.findViewById(R.id.fresultdetailtvaddress);
-        tvcondition = view.findViewById(R.id.fresultdetailtvcondition);
-        tvneighborhood = view.findViewById(R.id.fresultdetailtvneighborhood);
 
         ItemController itemController = new ItemController();
         itemController.getItem(new ResultListener<Item>() {
             @Override
             public void onFinish(Item result) {
                 //Glide.with(getContext()).load(result.getPictures().get(0).getUrl()).centerCrop().into(ivresult);
-                tvtitle.setText(result.getTitle());
-                tvprice.setText("$" + result.getPrice());
-                tvaddress.setText(result.getSellerAddress().getCity().getName() + " - " +
+                binding.fresultdetailtvtitle.setText(result.getTitle());
+                binding.fresultdetailtvprice.setText("$" + result.getPrice());
+                binding.fresultdetailtvaddress.setText(result.getSellerAddress().getCity().getName() + " - " +
                         result.getSellerAddress().getState().getName());
                 if (result.getCondition() != null){
-                    tvcondition.setText(result.getCondition());
+                    binding.fresultdetailtvcondition.setText(result.getCondition());
                 }
                 if (result.getLocation().getNeighborhood() != null){
                     if (result.getLocation().getNeighborhood().getName() != null){
-                        tvneighborhood.setText(result.getLocation().getNeighborhood().getName());
+                        binding.fresultdetailtvneighborhood.setText(result.getLocation().getNeighborhood().getName());
                     }
                 }
+
+                lat = Double.parseDouble(result.getSellerAddress().getLatitude());
+                lng = Double.parseDouble(result.getSellerAddress().getLongitude());
 
                 List<String> urls = new ArrayList<>();
                 for (int i = 0; i < result.getPictures().size(); i++) {
@@ -93,9 +90,20 @@ public class ResultDetailFragment extends Fragment {
                 ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getFragmentManager(),fragmentList);
                 binding.viewpager.setAdapter(viewPagerAdapter);
 
-
             }
         }, id);
+
+        binding.fresultdetailtvubicacion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle1 = new Bundle();
+                bundle1.putDouble("lat", lat);
+                bundle1.putDouble("lng", lng);
+                itemFragmentListener.onClickUbicacion(bundle1);
+            }
+        });
+
+
 
 
         return view;
@@ -110,6 +118,10 @@ public class ResultDetailFragment extends Fragment {
         }
         return fragments;
 
+    }
+
+    public interface ItemFragmentListener{
+        void onClickUbicacion(Bundle bundle1);
     }
 
 }

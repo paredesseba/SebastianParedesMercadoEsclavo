@@ -8,4 +8,5 @@
     <string name="facebook_app_id">259053415300791</string>
     <string name="fb_login_protocol_scheme">fb259053415300791</string>
     <string name="buscando">Buscaste %s</string>
+    <string name="title_activity_location_seller">Map</string>
 </resources>
