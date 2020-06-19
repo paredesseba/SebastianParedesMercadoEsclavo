@@ -8,8 +8,7 @@ public class Filter {
 
     private String id;
     private String name;
-    @SerializedName("value_filters")
-    private List<ValueFilter> valueFilters;
+    private List<ValueFilter> values;
 
     public Filter() {
     }
@@ -17,7 +16,7 @@ public class Filter {
     public Filter(String id, String name, List<ValueFilter> valueFilters) {
         this.id = id;
         this.name = name;
-        this.valueFilters = valueFilters;
+        this.values = valueFilters;
     }
 
     public String getId() {
@@ -37,10 +36,15 @@ public class Filter {
     }
 
     public List<ValueFilter> getValueFilters() {
-        return valueFilters;
+        return values;
     }
 
-    public void setValueFilters(List<ValueFilter> valueFilters) {
-        this.valueFilters = valueFilters;
+    public void setValues(List<ValueFilter> values) {
+        this.values = values;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class QueryResponseDao {
 
-    protected static final String BASE_URL = "https://api.mercadolibre.com/sites/MLA/";
+    public static final String BASE_URL = "https://api.mercadolibre.com/sites/MLA/";
     private Retrofit retrofit;
     private QueryResponseService queryResponseService;
 
@@ -68,6 +68,27 @@ public class QueryResponseDao {
 
     public void getQueryRSearch(final ResultListener<QueryResponse> resultListener, String query, Integer offset, Integer limit){
         Call<QueryResponse> queryResponseCall = queryResponseService.getQueryRSearch(query, offset,limit);
+        queryResponseCall.enqueue(new Callback<QueryResponse>() {
+            @Override
+            public void onResponse(Call<QueryResponse> call, Response<QueryResponse> response) {
+                if (response.isSuccessful()){
+                    QueryResponse queryResponse = response.body();
+                    resultListener.onFinish(queryResponse);
+                }
+                else {
+                    response.errorBody();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<QueryResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
+    public void getSearchAndFilters(final ResultListener<QueryResponse> resultListener, String url){
+        Call<QueryResponse> queryResponseCall = queryResponseService.getSearchAndFilters(url);
         queryResponseCall.enqueue(new Callback<QueryResponse>() {
             @Override
             public void onResponse(Call<QueryResponse> call, Response<QueryResponse> response) {

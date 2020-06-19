@@ -38,4 +38,9 @@ public class ValueFilter {
     public void setResults(String results) {
         this.results = results;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

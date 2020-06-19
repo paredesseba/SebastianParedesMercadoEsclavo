@@ -13,17 +13,20 @@ public class QueryResponse {
     @SerializedName("available_sorts")
     private List<Sort> availableSorts;
     private List<Filter> filters;
+    @SerializedName("available_filters")
+    private List<Filter> availableFilters;
 
     public QueryResponse() {
     }
 
-    public QueryResponse(String query, Paging paging, List<Result> results, Sort sort, List<Sort> availableSorts, List<Filter> filters) {
+    public QueryResponse(String query, Paging paging, List<Result> results, Sort sort, List<Sort> availableSorts, List<Filter> filters, List<Filter> availableFilters) {
         this.query = query;
         this.paging = paging;
         this.results = results;
         this.sort = sort;
         this.availableSorts = availableSorts;
         this.filters = filters;
+        this.availableFilters = availableFilters;
     }
 
     public String getQuery() {
@@ -72,5 +75,13 @@ public class QueryResponse {
 
     public void setFilters(List<Filter> filters) {
         this.filters = filters;
+    }
+
+    public List<Filter> getAvailableFilters() {
+        return availableFilters;
+    }
+
+    public void setAvailableFilters(List<Filter> availableFilters) {
+        this.availableFilters = availableFilters;
     }
 }
