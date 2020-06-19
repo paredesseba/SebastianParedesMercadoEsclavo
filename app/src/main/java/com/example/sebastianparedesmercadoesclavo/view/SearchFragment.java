@@ -2,6 +2,7 @@ package com.example.sebastianparedesmercadoesclavo.view;
 
 import android.content.Context;
 import android.database.DataSetObserver;
+import android.hardware.Camera;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.Toast;
 
 import com.example.sebastianparedesmercadoesclavo.R;
 import com.example.sebastianparedesmercadoesclavo.controller.QueryResponseController;
@@ -28,23 +30,34 @@ import com.example.sebastianparedesmercadoesclavo.model.ValueFilter;
 import com.example.sebastianparedesmercadoesclavo.util.ResultListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
+ *
  */
+
+
 public class SearchFragment extends Fragment implements ResultListAdapter.ResultListAdapterListener {
 
+    //parametros fijos del querymap
+    public static final String KEY_Q = "q";
+    public static final String KEY_OFFSET = "offset";
+    public static final String KEY_LIMIT = "limit";
     public static final Integer SIZE_PAGE = 50;
+    private String filterid;
+    private String filtrovalue;
+    private Integer paginas = 0;
     private FragmentSearchBinding binding;
     private SearchFragmentListener listener;
-    private Integer paginas = 0;
     private Integer paginaactual;
     private Integer offset;
     private QueryResponse resultados;
     private QueryResponseController queryResponseController;
-    private String valuefilterid;
-    private String filterid;
+    private Map<String, Object> params = new HashMap<>();
+
 
 
     public SearchFragment() {
@@ -73,6 +86,7 @@ public class SearchFragment extends Fragment implements ResultListAdapter.Result
         binding.btnprev.setVisibility(View.GONE);
         binding.btnnext.setVisibility(View.GONE);
         binding.tvpagina.setVisibility(View.GONE);
+        binding.layoutfilters.setVisibility(View.GONE);
 
         //creo controller
         queryResponseController = new QueryResponseController();
@@ -80,10 +94,12 @@ public class SearchFragment extends Fragment implements ResultListAdapter.Result
         //busqueda nueva
         binding.searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(final String query) { //enter
+            public boolean onQueryTextSubmit(String query) { //enter
                 if (query != null) { //Osea si hay algo que buscar
 
-                    //Visibilizo la UI de paginacion
+                    //visibilizo UI
+                    binding.layoutfilters.setVisibility(View.VISIBLE);
+                    binding.layoutpaginate.setVisibility(View.VISIBLE);
                     binding.btnprev.setVisibility(View.VISIBLE);
                     binding.btnnext.setVisibility(View.VISIBLE);
                     binding.tvpagina.setVisibility(View.VISIBLE);
@@ -94,32 +110,30 @@ public class SearchFragment extends Fragment implements ResultListAdapter.Result
                     //inicializo la pagina actual
                     paginaactual = 1;
 
-                    //busco
+                    //armo el map
+                    params.clear();
+                    params.put(KEY_Q, query);
+                    params.put(KEY_LIMIT, SIZE_PAGE);
+                    params.put(KEY_OFFSET, offset);
+
+                    //BUSCO
                     queryResponseController.getQueryRSearch(new ResultListener<QueryResponse>() {
                         @Override
-                        public void onFinish(final QueryResponse result) {
-
+                        public void onFinish(QueryResponse result) {
                             resultados = result;
-
-                            //actualizo recyclerview
                             updateRecycler(result);
-
-                            //seteo el layout de paginacion
                             controlPaging(result);
-
-                            //seteo filtrosID
                             setAdapterFilterID(result);
-
-
                         }
-                    }, query, offset, SIZE_PAGE);
+                    }, params);
                 }
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                //no hacer nada
+                    binding.layoutfilters.setVisibility(View.GONE);
+                    binding.layoutpaginate.setVisibility(View.GONE);
                 return true;
             }
         });
@@ -130,14 +144,20 @@ public class SearchFragment extends Fragment implements ResultListAdapter.Result
             public void onClick(View v) {
                 if (paginaactual > 1){
                     offset = offset - SIZE_PAGE; //y vuelvo a buscar
+                    params.put(KEY_OFFSET, offset);
                     queryResponseController.getQueryRSearch(new ResultListener<QueryResponse>() {
                         @Override
                         public void onFinish(QueryResponse result) {
+                            resultados = result;
                             updateRecycler(result);
                         }
-                    }, binding.searchview.getQuery().toString(), offset, SIZE_PAGE);
+                    }, params);
                     paginaactual = paginaactual - 1;
                     binding.tvpagina.setText("Pagina " + paginaactual + " de "+ paginas);
+                }
+                else
+                {
+                    Toast.makeText(getContext(),"No podes ir a la pagina anterior", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -147,31 +167,36 @@ public class SearchFragment extends Fragment implements ResultListAdapter.Result
             @Override
             public void onClick(View v) {
                 if (paginaactual < paginas){
-                    offset = offset + SIZE_PAGE; //y vuelvo a buscar
+                    offset = offset + SIZE_PAGE;
+                    params.put(KEY_OFFSET, offset); //y vuelvo a buscar
                     queryResponseController.getQueryRSearch(new ResultListener<QueryResponse>() {
                         @Override
                         public void onFinish(QueryResponse result) {
+                            resultados = result;
                             updateRecycler(result);
                         }
-                    }, binding.searchview.getQuery().toString(), offset, SIZE_PAGE);
+                    }, params);
                     paginaactual = paginaactual +1;
                     binding.tvpagina.setText("Pagina " + paginaactual + " de "+ paginas);
+                }
+                else
+                {
+                    Toast.makeText(getContext(),"No podes ir a la pagina siguiente", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-
         binding.spinnerFilterID.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                setAdapterValueFilter(position);
                 Filter filter = (Filter) binding.spinnerFilterID.getSelectedItem();
-                filterid = filter.getId().toString();
+                filterid = filter.getId();
+                setAdapterValueFilter(filter);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                filterid = null;
+                //no hacer nada
             }
         });
 
@@ -179,29 +204,52 @@ public class SearchFragment extends Fragment implements ResultListAdapter.Result
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 ValueFilter valueFilter = (ValueFilter) binding.spinnerFilterValue.getSelectedItem();
-                valuefilterid = valueFilter.getId().toString();
+                if (filterid != null){
+                    filtrovalue = valueFilter.getId();
+                }
+                else {
+                    Toast.makeText(getContext(),"Primero selecciona un tipo de filtro", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                valuefilterid = null;
+                //no hacer nada
             }
         });
 
         binding.btnok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                offset = 0;
-                queryResponseController.getSearchAndFilters(new ResultListener<QueryResponse>() {
+                params.put(filterid, filtrovalue);
+                filterid = null;
+                filtrovalue = null;
+                queryResponseController.getQueryRSearch(new ResultListener<QueryResponse>() {
                     @Override
                     public void onFinish(QueryResponse result) {
+                        resultados = result;
                         updateRecycler(result);
                         controlPaging(result);
                         setAdapterFilterID(result);
                     }
-                }, binding.searchview.getQuery().toString(), offset, SIZE_PAGE, filterid, valuefilterid, resultados.getFilters());
+                }, params);
 
+            }
+        });
 
+        binding.btnclearfilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveQueryAndCreateNewHashmap(params);
+                queryResponseController.getQueryRSearch(new ResultListener<QueryResponse>() {
+                    @Override
+                    public void onFinish(QueryResponse result) {
+                        resultados = result;
+                        updateRecycler(result);
+                        controlPaging(result);
+                        setAdapterFilterID(result);
+                    }
+                }, params);
             }
         });
 
@@ -210,46 +258,37 @@ public class SearchFragment extends Fragment implements ResultListAdapter.Result
     }
 
 
+    private void saveQueryAndCreateNewHashmap(Map<String,Object> params) {
+        offset=0;
+        params.clear();
+        params.put(KEY_Q, binding.searchview.getQuery().toString());
+        params.put(KEY_OFFSET, offset);
+        params.put(KEY_LIMIT,SIZE_PAGE);
 
-    //METODOS DEL FRAGMENT
+    }
 
-
-
-
-
-
-    private void setAdapterValueFilter(int position) {
+    private void setAdapterValueFilter(Filter filterID) {
         List<ValueFilter> filterValueList = new ArrayList<>();
-        for (int i = 0; i < resultados.getAvailableFilters().get(position).getValueFilters().size(); i++) {
-            ValueFilter valueFilter = resultados.getAvailableFilters().get(position).getValueFilters().get(i);
+        for (int i = 0; i < filterID.getValueFilters().size(); i++) {
+            ValueFilter valueFilter = filterID.getValueFilters().get(i);
             filterValueList.add(valueFilter);
         }
+
         ArrayAdapter<ValueFilter> valueFilterArrayAdapter = new ArrayAdapter<ValueFilter>(SearchFragment.this.getContext(), R.layout.support_simple_spinner_dropdown_item, filterValueList);
         binding.spinnerFilterValue.setAdapter(valueFilterArrayAdapter);
     }
 
-    private void setAdapterFilterID(QueryResponse result) {
+    private void setAdapterFilterID(QueryResponse resultados) {
+        //creo lista para su adapter
         List<Filter> filterIDlist = new ArrayList<>();
-        for (int i = 0; i < result.getAvailableFilters().size(); i++) {
-            Filter filterID = result.getAvailableFilters().get(i);
+        for (int i = 0; i < resultados.getAvailableFilters().size(); i++) {
+            Filter filterID = resultados.getAvailableFilters().get(i);
             filterIDlist.add(filterID);
         }
+        //set de la lista al adapter, set del adapter al spinner
         ArrayAdapter<Filter> filterIDArrayAdapter = new ArrayAdapter<Filter>(SearchFragment.this.getContext(), R.layout.support_simple_spinner_dropdown_item, filterIDlist);
         binding.spinnerFilterID.setAdapter(filterIDArrayAdapter);
 
-        binding.spinnerFilterID.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                setAdapterValueFilter(position);
-                Filter filter = (Filter) binding.spinnerFilterID.getSelectedItem();
-                filterid = filter.getId().toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                filterid = null;
-            }
-        });
     }
 
     private void controlPaging(QueryResponse result) {

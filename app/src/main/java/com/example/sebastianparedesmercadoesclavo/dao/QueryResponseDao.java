@@ -4,6 +4,8 @@ import com.example.sebastianparedesmercadoesclavo.model.QueryResponse;
 import com.example.sebastianparedesmercadoesclavo.service.QueryResponseService;
 import com.example.sebastianparedesmercadoesclavo.util.ResultListener;
 
+import java.util.Map;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -66,8 +68,8 @@ public class QueryResponseDao {
         });
     }
 
-    public void getQueryRSearch(final ResultListener<QueryResponse> resultListener, String query, Integer offset, Integer limit){
-        Call<QueryResponse> queryResponseCall = queryResponseService.getQueryRSearch(query, offset,limit);
+    public void getQueryRSearch(final ResultListener<QueryResponse> resultListener, Map<String,Object> params){
+        Call<QueryResponse> queryResponseCall = queryResponseService.getQueryRSearch(params);
         queryResponseCall.enqueue(new Callback<QueryResponse>() {
             @Override
             public void onResponse(Call<QueryResponse> call, Response<QueryResponse> response) {
@@ -87,7 +89,7 @@ public class QueryResponseDao {
         });
     }
 
-    public void getSearchAndFilters(final ResultListener<QueryResponse> resultListener, String url){
+   /* public void getSearchAndFilters(final ResultListener<QueryResponse> resultListener, String url){
         Call<QueryResponse> queryResponseCall = queryResponseService.getSearchAndFilters(url);
         queryResponseCall.enqueue(new Callback<QueryResponse>() {
             @Override
@@ -106,7 +108,7 @@ public class QueryResponseDao {
                 t.printStackTrace();
             }
         });
-    }
+    }*/
 
 
 }
