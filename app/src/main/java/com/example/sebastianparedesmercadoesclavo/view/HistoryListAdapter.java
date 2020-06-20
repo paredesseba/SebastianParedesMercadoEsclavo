@@ -17,6 +17,10 @@ public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.
     private List<String> historyList;
 
 
+    public HistoryListAdapter(List<String> historyList) {
+        this.historyList = historyList;
+    }
+
     @NonNull
     @Override
     public ViewHolderHistory onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
