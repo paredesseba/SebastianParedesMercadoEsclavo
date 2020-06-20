@@ -39,24 +39,35 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:textSize="45sp"
-            app:layout_constraintBottom_toTopOf="@+id/fresultdetailtvubicacion"
+            app:layout_constraintBottom_toTopOf="@+id/layoutbotones"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fresultdetailtvtitle" />
 
-        <TextView
-            android:clickable="true"
-            android:id="@+id/fresultdetailtvubicacion"
+        <LinearLayout
+            android:id="@+id/layoutbotones"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="UBICACION:"
-            android:textColor="@color/colorAccent"
-            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@+id/fresultdetailtvprice"
             app:layout_constraintBottom_toTopOf="@+id/fresultdetailtvaddress"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fresultdetailtvprice" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/verubicacion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="VER UBICACION DEL VENDEDOR"/>
+
+            <Button
+                android:id="@+id/addfavs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AGREGAR A FAVORITOS"/>
+
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/fresultdetailtvaddress"
@@ -68,7 +79,7 @@
             app:layout_constraintBottom_toTopOf="@+id/fresultdetailtvcondition"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fresultdetailtvubicacion" />
+            app:layout_constraintTop_toBottomOf="@+id/layoutbotones" />
 
         <TextView
             android:id="@+id/fresultdetailtvcondition"

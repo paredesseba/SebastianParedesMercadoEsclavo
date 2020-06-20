@@ -14,6 +14,7 @@ public class Item {
     private String categoryId;
     private String price;
     private String condition;
+    private String thumbnail;
     private List<ItemPicture> pictures;
     @SerializedName("seller_address")
     private ItemSellerAddress sellerAddress;
@@ -23,13 +24,14 @@ public class Item {
     public Item() {
     }
 
-    public Item(String id, String title, String sellerId, String categoryId, String price, String condition, List<ItemPicture> pictures, ItemSellerAddress sellerAddress, ItemLocation location, List<Attribute> attributes) {
+    public Item(String id, String title, String sellerId, String categoryId, String price, String condition, String thumbnail, List<ItemPicture> pictures, ItemSellerAddress sellerAddress, ItemLocation location, List<Attribute> attributes) {
         this.id = id;
         this.title = title;
         this.sellerId = sellerId;
         this.categoryId = categoryId;
         this.price = price;
         this.condition = condition;
+        this.thumbnail = thumbnail;
         this.pictures = pictures;
         this.sellerAddress = sellerAddress;
         this.location = location;
@@ -114,5 +116,13 @@ public class Item {
 
     public void setAttributes(List<Attribute> attributes) {
         this.attributes = attributes;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 }

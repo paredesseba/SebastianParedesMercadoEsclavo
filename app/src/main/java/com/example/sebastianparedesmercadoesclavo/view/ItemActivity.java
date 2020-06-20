@@ -14,10 +14,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.sebastianparedesmercadoesclavo.R;
+import com.example.sebastianparedesmercadoesclavo.controller.ItemController;
 import com.example.sebastianparedesmercadoesclavo.databinding.ActivityItemBinding;
+import com.example.sebastianparedesmercadoesclavo.model.Item;
+import com.example.sebastianparedesmercadoesclavo.util.ResultListener;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import static com.example.sebastianparedesmercadoesclavo.view.ResultDetailFragment.KEY_ID;
 
@@ -28,6 +35,9 @@ public class ItemActivity extends AppCompatActivity implements ResultDetailFragm
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ActivityItemBinding binding;
+    private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
 
 
 
@@ -68,6 +78,10 @@ public class ItemActivity extends AppCompatActivity implements ResultDetailFragm
 
         pegarFragment(resultDetailFragment);
 
+        db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+
 
     }
 
@@ -92,5 +106,18 @@ public class ItemActivity extends AppCompatActivity implements ResultDetailFragm
         Intent intent = new Intent(ItemActivity.this, LocationSellerActivity.class);
         intent.putExtras(bundle1);
         startActivity(intent);
+    }
+
+    @Override
+    public void onClickAddFav(Item item) {
+        ItemController itemController = new ItemController();
+        if (currentUser != null){
+            itemController.agregarItemAFavoritosFirestore(item, currentUser, new ResultListener<Item>() {
+                @Override
+                public void onFinish(Item result) {
+                    Toast.makeText(ItemActivity.this, "Articulo agregado a favoritos", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 }

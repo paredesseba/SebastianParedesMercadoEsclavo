@@ -38,6 +38,7 @@ public class ResultDetailFragment extends Fragment {
     private Double lat;
     private Double lng;
     private ItemFragmentListener itemFragmentListener;
+    private Item item;
 
 
     public ResultDetailFragment() {
@@ -62,7 +63,9 @@ public class ResultDetailFragment extends Fragment {
         itemController.getItem(new ResultListener<Item>() {
             @Override
             public void onFinish(Item result) {
-                //Glide.with(getContext()).load(result.getPictures().get(0).getUrl()).centerCrop().into(ivresult);
+
+                item = result;
+
                 binding.fresultdetailtvtitle.setText(result.getTitle());
                 binding.fresultdetailtvprice.setText("$" + result.getPrice());
                 binding.fresultdetailtvaddress.setText(result.getSellerAddress().getCity().getName() + " - " +
@@ -93,13 +96,20 @@ public class ResultDetailFragment extends Fragment {
             }
         }, id);
 
-        binding.fresultdetailtvubicacion.setOnClickListener(new View.OnClickListener() {
+        binding.verubicacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle1 = new Bundle();
                 bundle1.putDouble("lat", lat);
                 bundle1.putDouble("lng", lng);
                 itemFragmentListener.onClickUbicacion(bundle1);
+            }
+        });
+
+        binding.addfavs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemFragmentListener.onClickAddFav(item);
             }
         });
 
@@ -122,6 +132,7 @@ public class ResultDetailFragment extends Fragment {
 
     public interface ItemFragmentListener{
         void onClickUbicacion(Bundle bundle1);
+        void onClickAddFav(Item item);
     }
 
 }

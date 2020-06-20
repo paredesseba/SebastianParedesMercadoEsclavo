@@ -56,6 +56,19 @@ public class MainActivity extends AppCompatActivity implements ResultListFragmen
                         SobreNosotrosFragment sobreNosotrosFragment = new SobreNosotrosFragment();
                         pegarFragment(sobreNosotrosFragment);
                         break;
+
+                    case R.id.menuItemFavoritos:
+                        FavoritosFragment favoritosFragment = new FavoritosFragment();
+                        pegarFragment(favoritosFragment);
+                        break;
+
+                    case R.id.menuItemBuscar:
+                        onClickFAB();
+                        break;
+
+                    case R.id.menuItemHistorial:
+                        //TODO
+                        break;
                 }
                 drawerLayout.closeDrawers();
                 return true;
