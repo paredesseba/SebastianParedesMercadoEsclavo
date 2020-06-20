@@ -67,7 +67,8 @@ public class MainActivity extends AppCompatActivity implements ResultListFragmen
                         break;
 
                     case R.id.menuItemHistorial:
-                        //TODO
+                        HistorialFragment historialFragment = new HistorialFragment();
+                        pegarFragment(historialFragment);
                         break;
                 }
                 drawerLayout.closeDrawers();

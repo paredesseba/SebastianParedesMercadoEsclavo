@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import com.example.sebastianparedesmercadoesclavo.R;
 import com.example.sebastianparedesmercadoesclavo.controller.HistorialController;
 import com.example.sebastianparedesmercadoesclavo.databinding.ActivitySearchBinding;
+import com.example.sebastianparedesmercadoesclavo.model.Query;
 import com.example.sebastianparedesmercadoesclavo.util.ResultListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -119,13 +120,13 @@ public class SearchActivity extends AppCompatActivity implements SearchFragment.
     }
 
     @Override
-    public void agregarHistorial(String query) {
+    public void agregarHistorial(Query query) {
         HistorialController historialController = new HistorialController();
         if (currentUser != null){
-            historialController.agregarHistorial(query, currentUser, new ResultListener<String>() {
+            historialController.agregarHistorial(query, currentUser, new ResultListener<Query>() {
                 @Override
-                public void onFinish(String result) {
-                    //se agrega la busqueda al historial
+                public void onFinish(Query query) {
+                    //se agrega la busqueda al historial, no hago nada
                 }
             });
         }

@@ -15,6 +15,7 @@ import com.example.sebastianparedesmercadoesclavo.controller.HistorialController
 import com.example.sebastianparedesmercadoesclavo.databinding.FragmentFavoritosBinding;
 import com.example.sebastianparedesmercadoesclavo.databinding.FragmentHistorialBinding;
 import com.example.sebastianparedesmercadoesclavo.model.Item;
+import com.example.sebastianparedesmercadoesclavo.model.Query;
 import com.example.sebastianparedesmercadoesclavo.util.ResultListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -47,11 +48,11 @@ public class HistorialFragment extends Fragment {
         currentUser = mAuth.getCurrentUser();
 
         HistorialController historialController = new HistorialController();
-        historialController.getHistorialFirestore(currentUser, new ResultListener<List<String>>() {
+        historialController.getHistorialFirestore(currentUser, new ResultListener<List<Query>>() {
             @Override
-            public void onFinish(List<String> result) {
+            public void onFinish(List<Query> result) {
                 HistoryListAdapter historyListAdapter = new HistoryListAdapter(result);
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false);
                 binding.recyclerhistorial.setAdapter(historyListAdapter);
                 binding.recyclerhistorial.setLayoutManager(linearLayoutManager);
             }

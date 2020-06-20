@@ -9,15 +9,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sebastianparedesmercadoesclavo.R;
+import com.example.sebastianparedesmercadoesclavo.model.Query;
 
 import java.util.List;
 
 public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.ViewHolderHistory> {
 
-    private List<String> historyList;
+    private List<Query> historyList;
 
 
-    public HistoryListAdapter(List<String> historyList) {
+    public HistoryListAdapter(List<Query> historyList) {
         this.historyList = historyList;
     }
 
@@ -32,8 +33,8 @@ public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolderHistory holder, int position) {
-        String string = this.historyList.get(position);
-        holder.onBind(string);
+        Query query = this.historyList.get(position);
+        holder.onBind(query);
     }
 
     @Override
@@ -50,8 +51,8 @@ public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.
             tv= itemView.findViewById(R.id.tvceldahistorial);
         }
 
-        public void onBind(String string) {
-            tv.setText(string);
+        public void onBind(Query query) {
+            tv.setText(query.getQuery());
         }
     }
 }

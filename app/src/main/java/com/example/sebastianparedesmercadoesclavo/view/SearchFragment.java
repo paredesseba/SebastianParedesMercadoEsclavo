@@ -25,6 +25,7 @@ import com.example.sebastianparedesmercadoesclavo.R;
 import com.example.sebastianparedesmercadoesclavo.controller.QueryResponseController;
 import com.example.sebastianparedesmercadoesclavo.databinding.FragmentSearchBinding;
 import com.example.sebastianparedesmercadoesclavo.model.Filter;
+import com.example.sebastianparedesmercadoesclavo.model.Query;
 import com.example.sebastianparedesmercadoesclavo.model.QueryResponse;
 import com.example.sebastianparedesmercadoesclavo.model.ValueFilter;
 import com.example.sebastianparedesmercadoesclavo.util.ResultListener;
@@ -60,7 +61,7 @@ public class SearchFragment extends Fragment implements ResultListAdapter.Result
     private QueryResponse resultados;
     private QueryResponseController queryResponseController;
     private Map<String, Object> params = new HashMap<>();
-
+    private Query query;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
@@ -108,7 +109,10 @@ public class SearchFragment extends Fragment implements ResultListAdapter.Result
             public boolean onQueryTextSubmit(String query) { //enter
                 if (query != null) { //Osea si hay algo que buscar
 
-                    listener.agregarHistorial(query);
+                    Query query1 = new Query();
+                    query1.setQuery(query);
+                    listener.agregarHistorial(query1);
+
 
                     //visibilizo UI
                     binding.layoutfilters.setVisibility(View.VISIBLE);
@@ -336,7 +340,7 @@ public class SearchFragment extends Fragment implements ResultListAdapter.Result
 
     public interface SearchFragmentListener {
         void onClickSearchFResult(String id);
-        void agregarHistorial (String query);
+        void agregarHistorial (Query query);
     }
 
 }

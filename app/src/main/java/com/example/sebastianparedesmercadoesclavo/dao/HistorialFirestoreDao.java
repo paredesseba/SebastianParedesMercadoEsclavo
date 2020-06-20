@@ -3,6 +3,7 @@ package com.example.sebastianparedesmercadoesclavo.dao;
 import androidx.annotation.NonNull;
 
 import com.example.sebastianparedesmercadoesclavo.model.Item;
+import com.example.sebastianparedesmercadoesclavo.model.Query;
 import com.example.sebastianparedesmercadoesclavo.util.ResultListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -25,7 +26,7 @@ public class HistorialFirestoreDao {
         this.db = FirebaseFirestore.getInstance();
     }
 
-    public void agregarHistorial(final String query, FirebaseUser firebaseUser, final ResultListener<String> resultListener){
+    public void agregarHistorial(final Query query, FirebaseUser firebaseUser, final ResultListener<Query> resultListener){
         db.collection(COLECC_HISTORIAL)
                 .document(firebaseUser.getUid())
                 .collection(MI_HISTORIAL)
@@ -39,7 +40,7 @@ public class HistorialFirestoreDao {
                 });
     }
 
-    public void getHistorialFirestore(FirebaseUser firebaseUser, final ResultListener<List<String>> listener){
+    public void getHistorialFirestore(FirebaseUser firebaseUser, final ResultListener<List<Query>> listener){
         db.collection(COLECC_HISTORIAL)
                 .document(firebaseUser.getUid())
                 .collection(MI_HISTORIAL)
@@ -48,9 +49,9 @@ public class HistorialFirestoreDao {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()){
-                            List<String> queryList = new ArrayList<>();
+                            List<Query> queryList = new ArrayList<>();
                             for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
-                                String query = queryDocumentSnapshot.toString();
+                                Query query = (Query) queryDocumentSnapshot.toObject(Query.class);
                                 queryList.add(query);
                             }
                             listener.onFinish(queryList);
@@ -58,5 +59,4 @@ public class HistorialFirestoreDao {
                     }
                 });
     }
-
 }
