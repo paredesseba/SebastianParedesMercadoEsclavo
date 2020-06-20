@@ -18,8 +18,13 @@ import android.widget.LinearLayout;
 
 
 import com.example.sebastianparedesmercadoesclavo.R;
+import com.example.sebastianparedesmercadoesclavo.controller.HistorialController;
 import com.example.sebastianparedesmercadoesclavo.databinding.ActivitySearchBinding;
+import com.example.sebastianparedesmercadoesclavo.util.ResultListener;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import static com.example.sebastianparedesmercadoesclavo.view.ResultDetailFragment.KEY_ID;
 
@@ -32,6 +37,9 @@ public class SearchActivity extends AppCompatActivity implements SearchFragment.
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private ActivitySearchBinding binding;
+    private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +72,14 @@ public class SearchActivity extends AppCompatActivity implements SearchFragment.
         //toolbar + burger
         configureToolbar();
 
+        db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+
         SearchFragment searchFragment = new SearchFragment(this);
         pegarFragment(searchFragment);
 
+        HistorialController historialController = new HistorialController();
 
     }
 
@@ -103,6 +116,19 @@ public class SearchActivity extends AppCompatActivity implements SearchFragment.
         bundle.putString(KEY_ID, id);
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+
+    @Override
+    public void agregarHistorial(String query) {
+        HistorialController historialController = new HistorialController();
+        if (currentUser != null){
+            historialController.agregarHistorial(query, currentUser, new ResultListener<String>() {
+                @Override
+                public void onFinish(String result) {
+                    //se agrega la busqueda al historial
+                }
+            });
+        }
     }
 
 }

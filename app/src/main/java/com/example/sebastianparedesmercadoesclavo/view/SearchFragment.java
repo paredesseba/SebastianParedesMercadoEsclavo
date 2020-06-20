@@ -28,6 +28,9 @@ import com.example.sebastianparedesmercadoesclavo.model.Filter;
 import com.example.sebastianparedesmercadoesclavo.model.QueryResponse;
 import com.example.sebastianparedesmercadoesclavo.model.ValueFilter;
 import com.example.sebastianparedesmercadoesclavo.util.ResultListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,6 +61,10 @@ public class SearchFragment extends Fragment implements ResultListAdapter.Result
     private QueryResponseController queryResponseController;
     private Map<String, Object> params = new HashMap<>();
 
+    private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
+
 
 
     public SearchFragment() {
@@ -82,6 +89,10 @@ public class SearchFragment extends Fragment implements ResultListAdapter.Result
         binding = FragmentSearchBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
+        db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+
         //ocultar layout de paginacion
         binding.btnprev.setVisibility(View.GONE);
         binding.btnnext.setVisibility(View.GONE);
@@ -96,6 +107,8 @@ public class SearchFragment extends Fragment implements ResultListAdapter.Result
             @Override
             public boolean onQueryTextSubmit(String query) { //enter
                 if (query != null) { //Osea si hay algo que buscar
+
+                    listener.agregarHistorial(query);
 
                     //visibilizo UI
                     binding.layoutfilters.setVisibility(View.VISIBLE);
@@ -323,6 +336,7 @@ public class SearchFragment extends Fragment implements ResultListAdapter.Result
 
     public interface SearchFragmentListener {
         void onClickSearchFResult(String id);
+        void agregarHistorial (String query);
     }
 
 }
