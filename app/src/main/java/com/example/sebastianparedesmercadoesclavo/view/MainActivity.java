@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements ResultListFragmen
         toolbar = findViewById(R.id.toolbar);
         navigationView = findViewById(R.id.mainNavView);
         drawerLayout = findViewById(R.id.mainDrawerL);
-
         db = FirebaseFirestore.getInstance();
 
         //listener de menu lateral

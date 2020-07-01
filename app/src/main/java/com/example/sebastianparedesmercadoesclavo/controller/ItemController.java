@@ -31,7 +31,7 @@ public class ItemController {
         itemFirestoreDao.agregarItemAFavoritosFirestore(item, firebaseUser, new ResultListener<Item>() {
             @Override
             public void onFinish(Item result) {
-                resultListener.onFinish(item);
+                resultListener.onFinish(result);
             }
         });
     }

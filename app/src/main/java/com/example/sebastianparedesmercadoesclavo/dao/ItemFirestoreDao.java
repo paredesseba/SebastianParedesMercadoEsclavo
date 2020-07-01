@@ -45,7 +45,7 @@ public class ItemFirestoreDao {
             .document(firebaseUser.getUid())
                 .collection(MIS_FAVORITOS)
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .addOnCompleteListener( new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()){

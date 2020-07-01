@@ -45,7 +45,7 @@ public class LocationSellerActivity extends FragmentActivity implements OnMapRea
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        int zoomLevel = 15;
+        int zoomLevel = 14;
         mMap.addMarker(new MarkerOptions().position(latLng).title("VENDEDOR"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
     }
