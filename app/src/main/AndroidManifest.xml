@@ -34,8 +34,6 @@
         <activity
             android:name=".view.LocationSellerActivity"
             android:label="@string/title_activity_location_seller"></activity>
-        <activity android:name=".view.ItemActivity" />
-        <activity android:name=".view.SearchActivity" />
         <activity android:name=".view.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

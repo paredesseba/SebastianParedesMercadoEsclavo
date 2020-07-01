@@ -1,8 +1,10 @@
 package com.example.sebastianparedesmercadoesclavo.view;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -45,8 +47,10 @@ public class ResultDetailFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public ResultDetailFragment(ItemFragmentListener itemFragmentListener) {
-        this.itemFragmentListener = itemFragmentListener;
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        itemFragmentListener = (ItemFragmentListener) context;
     }
 
     @Override

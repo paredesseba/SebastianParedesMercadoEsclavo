@@ -14,24 +14,35 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.sebastianparedesmercadoesclavo.R;
+import com.example.sebastianparedesmercadoesclavo.controller.HistorialController;
+import com.example.sebastianparedesmercadoesclavo.controller.ItemController;
 import com.example.sebastianparedesmercadoesclavo.databinding.ActivityMainBinding;
+import com.example.sebastianparedesmercadoesclavo.model.Item;
+import com.example.sebastianparedesmercadoesclavo.model.Query;
 import com.example.sebastianparedesmercadoesclavo.model.Result;
+import com.example.sebastianparedesmercadoesclavo.util.ResultListener;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import static com.example.sebastianparedesmercadoesclavo.view.ResultDetailFragment.KEY_ID;
 
 
-public class MainActivity extends AppCompatActivity implements ResultListFragment.ResultListFragmentListener {
+public class MainActivity extends AppCompatActivity implements ResultListFragment.ResultListFragmentListener,
+        SearchFragment.SearchFragmentListener, ResultDetailFragment.ItemFragmentListener {
 
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ActivityMainBinding binding;
-    // Access a Cloud Firestore instance from your Activity
+    public static final String KEY_ID = "id";
     private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +55,10 @@ public class MainActivity extends AppCompatActivity implements ResultListFragmen
         toolbar = findViewById(R.id.toolbar);
         navigationView = findViewById(R.id.mainNavView);
         drawerLayout = findViewById(R.id.mainDrawerL);
+
         db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
 
         //listener de menu lateral
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -62,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements ResultListFragmen
                         break;
 
                     case R.id.menuItemBuscar:
-                        onClickFAB();
+                        onClickBuscar();
                         break;
 
                     case R.id.menuItemHistorial:
@@ -82,14 +96,6 @@ public class MainActivity extends AppCompatActivity implements ResultListFragmen
         ResultListFragment resultListFragment = new ResultListFragment();
         //lo pego sin metodo (sin addtobackstack)
         pegarFragment(resultListFragment);
-
-        //FAB
-        binding.FABsearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickFAB();
-            }
-        });
 
     }
 
@@ -111,19 +117,61 @@ public class MainActivity extends AppCompatActivity implements ResultListFragmen
         fragmentTransaction.commit();
     }
 
-    //ResultListFragment. Intent a ItemActivity
+    //ResultListFragment. Pega ResultDetailFragment
     @Override
     public void onClickResult(String id) {
-        Intent intent = new Intent(MainActivity.this, ItemActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString(KEY_ID, id);
-        intent.putExtras(bundle);
-        startActivity(intent);
+        Bundle bundleFragment = new Bundle();
+        bundleFragment.putString(KEY_ID, id);
+        ResultDetailFragment resultDetailFragment = new ResultDetailFragment();
+        resultDetailFragment.setArguments(bundleFragment);
+        pegarFragment(resultDetailFragment);
     }
 
     //Listener FAB. Intent a SearchActivity
-    public void onClickFAB(){
-        Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+    public void onClickBuscar(){
+        SearchFragment searchFragment = new SearchFragment();
+        pegarFragment(searchFragment);
+    }
+
+    @Override
+    public void onClickSearchFResult(String id) {
+        Bundle bundleFragment = new Bundle();
+        bundleFragment.putString(KEY_ID, id);
+        ResultDetailFragment resultDetailFragment = new ResultDetailFragment();
+        resultDetailFragment.setArguments(bundleFragment);
+        pegarFragment(resultDetailFragment);
+    }
+
+    @Override
+    public void agregarHistorial(Query query) {
+        HistorialController historialController = new HistorialController();
+        if (currentUser != null){
+            historialController.agregarHistorial(query, currentUser, new ResultListener<Query>() {
+                @Override
+                public void onFinish(Query query) {
+                    //se agrega la busqueda al historial, no hago nada
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onClickUbicacion(Bundle bundle1) {
+        Intent intent = new Intent(MainActivity.this, LocationSellerActivity.class);
+        intent.putExtras(bundle1);
         startActivity(intent);
+    }
+
+    @Override
+    public void onClickAddFav(Item item) {
+        ItemController itemController = new ItemController();
+        if (currentUser != null){
+            itemController.agregarItemAFavoritosFirestore(item, currentUser, new ResultListener<Item>() {
+                @Override
+                public void onFinish(Item result) {
+                    Toast.makeText(MainActivity.this, "Articulo agregado a favoritos", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 }
