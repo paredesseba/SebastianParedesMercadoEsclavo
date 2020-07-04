@@ -48,6 +48,7 @@
             android:id="@+id/layoutbotones"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             app:layout_constraintTop_toBottomOf="@+id/fresultdetailtvprice"
             app:layout_constraintBottom_toTopOf="@+id/fresultdetailtvaddress"
             app:layout_constraintStart_toStartOf="parent"
@@ -58,13 +59,13 @@
                 android:id="@+id/verubicacion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="VER UBICACION DEL VENDEDOR"/>
+                android:text="UBICACION DEL VENDEDOR"/>
 
             <Button
                 android:id="@+id/addfavs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="AGREGAR A FAVORITOS"/>
+                android:text="AGREGAR FAVORITO"/>
 
         </LinearLayout>
 

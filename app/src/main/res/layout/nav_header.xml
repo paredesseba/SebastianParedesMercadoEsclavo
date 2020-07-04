@@ -17,23 +17,13 @@
         >
 
         <ImageView
+            android:id="@+id/ivheader"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:src="@drawable/mercadoesclavologo"
             />
 
     </androidx.cardview.widget.CardView>
-
-    <TextView
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:text="➜"
-        android:gravity="center"
-        android:textColor="#000"
-        android:textSize="25dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
 
     <TextView
         android:id="@+id/headerusername"

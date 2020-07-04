@@ -14,8 +14,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.sebastianparedesmercadoesclavo.R;
 import com.example.sebastianparedesmercadoesclavo.controller.HistorialController;
 import com.example.sebastianparedesmercadoesclavo.controller.ItemController;
@@ -43,6 +46,10 @@ public class MainActivity extends AppCompatActivity implements ResultListFragmen
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
+    private TextView tvheadernombre;
+    private TextView tvheadermail;
+    private ImageView ivheader;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +98,22 @@ public class MainActivity extends AppCompatActivity implements ResultListFragmen
 
         //toolbar + burger king
         configureToolbar();
+
+        View headerView = binding.mainNavView.getHeaderView(0);
+        ivheader = headerView.findViewById(R.id.ivheader);
+        tvheadermail = headerView.findViewById(R.id.headermail);
+        tvheadernombre = headerView.findViewById(R.id.headerusername);
+
+        tvheadermail.setText(currentUser.getEmail());
+        if (currentUser.getDisplayName() != null){
+            tvheadernombre.setText(currentUser.getDisplayName());
+        }
+        else {
+            tvheadernombre.setText("Hola!!");
+        }
+        if (currentUser.getPhotoUrl() != null){
+            Glide.with(this).load(currentUser.getPhotoUrl()).into(ivheader);
+        }
 
         //fragment con todos los recyclers del home
         ResultListFragment resultListFragment = new ResultListFragment();

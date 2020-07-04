@@ -75,11 +75,11 @@ public class ResultDetailFragment extends Fragment {
                 binding.fresultdetailtvaddress.setText(result.getSellerAddress().getCity().getName() + " - " +
                         result.getSellerAddress().getState().getName());
                 if (result.getCondition() != null){
-                    binding.fresultdetailtvcondition.setText(result.getCondition());
+                    binding.fresultdetailtvcondition.setText("Condicion del item: " + result.getCondition());
                 }
                 if (result.getLocation().getNeighborhood() != null){
                     if (result.getLocation().getNeighborhood().getName() != null){
-                        binding.fresultdetailtvneighborhood.setText(result.getLocation().getNeighborhood().getName());
+                        binding.fresultdetailtvneighborhood.setText("Barrio: " + result.getLocation().getNeighborhood().getName());
                     }
                 }
 

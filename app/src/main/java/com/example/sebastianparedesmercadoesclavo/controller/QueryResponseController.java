@@ -61,18 +61,5 @@ public class QueryResponseController {
 //        }, url);
 //    }
 
-//    public String armarURL (String query, Integer offset, Integer limit, String filterID, String filterValue, List<Filter> filters){
-//        String url;
-//        String addFilters = new String();
-//        for (int i = 0; i < filters.size(); i++) {
-//            addFilters = addFilters + "&"+filters.get(i).getId()+"="+filters.get(i).getValueFilters().get(0).getId();
-//        }
-//        if (filterID == null && filterValue == null){
-//            url = BASE_URL + "search?q=" + query + "&limit=" + limit + "&offset=" + offset + addFilters;
-//        }
-//        else{
-//            url = BASE_URL + "search?q=" + query + "&limit=" + limit + "&offset=" + offset + "&" + filterID + "=" + filterValue + addFilters;
-//        }
-//        return url;
-//    }
+
 }

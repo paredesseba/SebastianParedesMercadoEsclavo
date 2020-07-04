@@ -32,6 +32,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.internal.tls.BasicTrustRootIndex;
+
 /**
  * A simple {@link Fragment} subclass.
  *
@@ -93,6 +95,7 @@ public class SearchFragment extends Fragment implements ResultListAdapter.Result
         binding.btnnext.setVisibility(View.GONE);
         binding.tvpagina.setVisibility(View.GONE);
         binding.layoutfilters.setVisibility(View.GONE);
+        binding.filter.setVisibility(View.GONE);
 
         //creo controller
         queryResponseController = new QueryResponseController();
@@ -109,7 +112,7 @@ public class SearchFragment extends Fragment implements ResultListAdapter.Result
 
 
                     //visibilizo UI
-                    binding.layoutfilters.setVisibility(View.VISIBLE);
+                    binding.filter.setVisibility(View.VISIBLE);
                     binding.layoutpaginate.setVisibility(View.VISIBLE);
                     binding.btnprev.setVisibility(View.VISIBLE);
                     binding.btnnext.setVisibility(View.VISIBLE);
@@ -261,6 +264,18 @@ public class SearchFragment extends Fragment implements ResultListAdapter.Result
                         setAdapterFilterID(result);
                     }
                 }, params);
+            }
+        });
+
+        binding.filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (binding.spinnerFilterID.getVisibility() == View.GONE){
+                    binding.spinnerFilterID.setVisibility(View.VISIBLE);
+                }
+                else {
+                    binding.spinnerFilterID.setVisibility(View.GONE);
+                }
             }
         });
 
